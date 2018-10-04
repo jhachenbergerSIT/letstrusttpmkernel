@@ -1,0 +1,5 @@
+48c48,49
+< #dtparam=spi=on
+---
+> dtparam=spi=on
+> dtoverlay=letstrust-tpm
