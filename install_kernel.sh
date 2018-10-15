@@ -1,3 +1,6 @@
+# - For Pi 2, Pi 3, or Compute Module 3
+KERNEL=kernel7
+
 SDCARD_BOOT_PATH=/media/boot/
 SDCARD_ROOT_PATH=/media/root/
 
@@ -5,11 +8,10 @@ SDCARD_ROOT_PATH=/media/root/
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- INSTALL_MOD_PATH=$SDCARD_ROOT_PATH modules_install
 
 # - Backup old kernel
-cp $SDCARD_BOOT_PATH/kernel.img $SDCARD_BOOT_PATH/kernel-backup.img
+cp $SDCARD_BOOT_PATH/$KERNEL.img $SDCARD_BOOT_PATH/$KERNEL-backup.img
 
 # - Deploy kernel
-cp arch/arm/boot/zImage $SDCARD_BOOT_PATH/kernel.img
-cp arch/arm/boot/zImage $SDCARD_BOOT_PATH/kernel7.img
+cp arch/arm/boot/zImage $SDCARD_BOOT_PATH/$KERNEL.img
 # - Deploy dts overlays
 cp arch/arm/boot/dts/*.dtb $SDCARD_BOOT_PATH/
 cp arch/arm/boot/dts/overlays/*.dtb* $SDCARD_BOOT_PATH/overlays/
