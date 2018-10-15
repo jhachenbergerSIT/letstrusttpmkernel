@@ -25,7 +25,8 @@ WORKDIR $HOME/linux
 ENV KERNEL=kernel7
 RUN make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bcm2709_defconfig
 RUN wget https://letstrust.de/uploads/letstrust-tpm-overlay.dts -O arch/arm/boot/dts/overlays/letstrust-tpm-overlay.dts
-COPY kernel/.config .
+COPY kernel/.config.patch .
+RUN cat .config.patch >> .config
 
 # - Build the kernel
 RUN make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- zImage modules dtbs overlays/letstrust-tpm.dtbo -j8
