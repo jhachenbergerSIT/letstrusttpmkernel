@@ -38,4 +38,4 @@ COPY kernel/config.patch /tmp
 COPY kernel/config.txt.md5sum /tmp
 
 # - Install kernel to sd card
-CMD ./install_kernel.sh
+ENTRYPOINT ["./install_kernel.sh"]
