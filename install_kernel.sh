@@ -6,8 +6,8 @@
 #     - kernel: For Pi 1, Pi Zero, Pi Zero W, or Compute Module
 KERNEL=${1:-kernel7}
 
-SDCARD_BOOT_PATH=/media/boot/
-SDCARD_ROOT_PATH=/media/root/
+SDCARD_BOOT_PATH=/media/boot
+SDCARD_ROOT_PATH=/media/root
 
 # - Build and install modules
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- INSTALL_MOD_PATH=$SDCARD_ROOT_PATH modules_install
@@ -23,4 +23,4 @@ cp arch/arm/boot/dts/overlays/*.dtb* $SDCARD_BOOT_PATH/overlays/
 cp arch/arm/boot/dts/overlays/README $SDCARD_BOOT_PATH/overlays/
 
 # - Enable tpm within config.txt (only apply the path as long as config.txt did not change)
-md5sum -c /tmp/config.txt.md5sum && patch $SDCARD_BOOT_PATH/config.txt < /tmp/config.patch
+patch $SDCARD_BOOT_PATH/config.txt -i /tmp/config.txt.patch

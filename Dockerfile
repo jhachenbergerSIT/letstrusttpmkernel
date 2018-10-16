@@ -34,8 +34,7 @@ RUN make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- zImage modules dtbs overlay
 # - Prepare the deploy-to-sd-card script
 COPY install_kernel.sh .
 RUN chmod u+x install_kernel.sh
-COPY kernel/config.patch /tmp
-COPY kernel/config.txt.md5sum /tmp
+COPY kernel/config.txt.patch /tmp
 
 # - Install kernel to sd card
 ENTRYPOINT ["./install_kernel.sh"]
