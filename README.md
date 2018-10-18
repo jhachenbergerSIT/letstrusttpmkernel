@@ -23,3 +23,11 @@ and run
     sudo docker run -it --volume $SDCARD_BOOT_PATH:/media/boot --volume $SDCARD_ROOT_PATH:/media/root rpi_tpm_kernel_builder
     
 to build and deploy the kernel to the SD card.
+
+# Switching Kernel Version
+
+It is possible to change the Kernel version. This is possible using the [build argument](https://docs.docker.com/engine/reference/builder/#arg) `KERNEL_BRANCH`, for example:
+
+    docker build --build-arg KERNEL_BRANCH=rpi-4.16.y -t rpi_tpm_kernel_builder_rpi-4.16.y .
+
+will build a Kernel with version 4.16. Any branch from [Raspberry Pi's Linux Kernel repository](https://github.com/raspberrypi/linux/branches) can theoretically be used, but newer versions can introduce new dependencies which this Docker container doesn#t fullfil.
