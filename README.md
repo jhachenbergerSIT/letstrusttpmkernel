@@ -31,3 +31,9 @@ It is possible to change the Kernel version. This is possible using the [build a
     docker build --build-arg KERNEL_BRANCH=rpi-4.16.y -t rpi_tpm_kernel_builder_rpi-4.16.y .
 
 will build a Kernel with version 4.16. Any branch from [Raspberry Pi's Linux Kernel repository](https://github.com/raspberrypi/linux/branches) can theoretically be used, but newer versions can introduce new dependencies which this Docker container doesn#t fullfil.
+
+# Switching Targeted Raspberry Pi
+
+It is possible to switch between "Pi 2, Pi 3, or Compute Module 3 (default)" and "Pi 1, Pi Zero, Pi Zero W, or Compute Module". To switch to a build for a Pi Zero, use:
+
+    docker build --build-arg KERNEL=kernel -t rpi_tpm_kernel_builder_rpi_0 .
