@@ -17,7 +17,10 @@ RUN apt update && apt install -y \
 
 # - Retrieve the Raspberry Pi Linux kernel code
 WORKDIR $HOME
-RUN git clone --progress https://github.com/raspberrypi/tools && git clone --progress --depth=1 https://github.com/raspberrypi/linux
+RUN git clone --depth=1 --progress https://github.com/raspberrypi/tools
+## - Set the kernel version to build, otherwise use the current default branch
+ARG KERNEL_BRANCH
+RUN if [ -z $KERNEL_BRANCH ] ; then git clone --depth=1 --progress https://github.com/raspberrypi/linux ; else git clone --branch=${KERNEL_BRANCH} --depth=1 --progress https://github.com/raspberrypi/linux  ; fi
 ENV PATH ${PATH}:~/tools
 
 # - Prepare the build config
