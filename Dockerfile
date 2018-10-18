@@ -25,7 +25,12 @@ ENV PATH ${PATH}:~/tools
 
 # - Prepare the build config
 WORKDIR $HOME/linux
-ENV KERNEL=kernel7
+## - Define the kernel to build
+##   Options:
+##     - kernel7: For Pi 2, Pi 3, or Compute Module 3 (default)
+##     - kernel: For Pi 1, Pi Zero, Pi Zero W, or Compute Module
+ARG KERNEL=kernel7
+ENV KERNEL=${KERNEL}
 RUN make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bcm2709_defconfig
 RUN wget https://letstrust.de/uploads/letstrust-tpm-overlay.dts -O arch/arm/boot/dts/overlays/letstrust-tpm-overlay.dts
 COPY kernel/.config.patch .
@@ -40,4 +45,4 @@ RUN chmod u+x install_kernel.sh
 COPY kernel/config.txt.patch /tmp
 
 # - Install kernel to sd card
-ENTRYPOINT ["./install_kernel.sh"]
+ENTRYPOINT ["./install_kernel.sh", ${KERNEL}]

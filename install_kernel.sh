@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-# - Define the kernel to build
-#   Options:
-#     - kernel7: For Pi 2, Pi 3, or Compute Module 3 (default)
-#     - kernel: For Pi 1, Pi Zero, Pi Zero W, or Compute Module
 KERNEL=${1:-kernel7}
 
 SDCARD_BOOT_PATH=/media/boot
