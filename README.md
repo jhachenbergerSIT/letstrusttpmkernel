@@ -37,3 +37,7 @@ will build a Kernel with version 4.16. Any branch from [Raspberry Pi's Linux Ker
 It is possible to switch between "Pi 2, Pi 3, or Compute Module 3 (default)" and "Pi 1, Pi Zero, Pi Zero W, or Compute Module". To switch to a build for a Pi Zero, use:
 
     sudo docker build --build-arg KERNEL=kernel -t rpi_tpm_kernel_builder_rpi_0 .
+
+# Supported Kernel Version
+
+The last tested kernel version can be found using the [git tags of this repository](https://github.com/jhachenbergerSIT/letstrusttpmkernel/releases).
