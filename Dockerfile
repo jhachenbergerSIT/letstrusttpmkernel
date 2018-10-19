@@ -12,7 +12,10 @@ RUN apt update && apt install -y \
 	gcc-arm-linux-gnueabihf \
 	gddrescue \
 	git \
-	libncurses5-dev
+	libncurses5-dev \
+	# - required by kernel v4.15
+	libssl-dev
+
 
 
 # - Retrieve the Raspberry Pi Linux kernel code
