@@ -14,7 +14,9 @@ RUN apt update && apt install -y \
 	git \
 	libncurses5-dev \
 	# - required by kernel v4.15
-	libssl-dev
+	libssl-dev \
+	# - required by kernel v4.16
+	bison flex
 
 
 
