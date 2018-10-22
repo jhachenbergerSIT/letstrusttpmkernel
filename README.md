@@ -1,11 +1,20 @@
 # General
 
-This Docker image is meant to be used to build a Linux Kernel for the Raspberry Pi with TPM support (especially LetsTrusts TPM). The steps involved have been extracted from [letstrust.de - Howto Enable TPM Support on a Raspberry PI (0, 0W, 1, 2, 3, 3b+) and make it work with the LetsTrust TPM](https://letstrust.de/archives/9-Howto-Enable-TPM-Support-on-a-Raspberry-PI-0,-0W,-1,-2,-3,-3b+-and-make-it-work-with-the-LetsTrust-TPM.html).
+This Docker image is meant to be used to build a Linux Kernel for the Raspberry Pi with TPM support (especially LetsTrusts TPM). The steps involved have been extracted from:
+
+[letstrust.de - Howto Enable TPM Support on a Raspberry PI (0, 0W, 1, 2, 3, 3b+) and make it work with the LetsTrust TPM](https://letstrust.de/archives/9-Howto-Enable-TPM-Support-on-a-Raspberry-PI-0,-0W,-1,-2,-3,-3b+-and-make-it-work-with-the-LetsTrust-TPM.html).
 
 # Requirements
 
-This projects aims to enhance already running Raspberry Pis with TPM. Hence, the runtime Docker container will try to deploy the new kernel to an RPi ready SD card (eg. with a Raspbian stored on it).
-Thus, we expect the presence of two volume mounts: root and boot. This is how a typical Raspberry Pi SD card is formatted.
+This projects aims to enhance already running Raspberry Pis with TPM. Hence, this Docker container expects two volume mounts: 
+
+    lsblk -o NAME,FSTYPE,LABEL,MOUNTPOINT /dev/mmcblk0
+    NAME        FSTYPE LABEL  MOUNTPOINT
+    mmcblk0                   
+    ├─mmcblk0p1 vfat   boot   /media/user/boot
+    └─mmcblk0p2 ext4   root /media/user/root
+    
+This is how a typical Raspberry Pi SD card is formatted while following the [standard installation instructions](https://www.raspberrypi.org/documentation/installation/). If your SD card is still empty, prepare your SD card following those instructions first.
 
 # Installation
 
@@ -39,5 +48,6 @@ It is possible to switch between "Pi 2, Pi 3, or Compute Module 3 (default)" and
     sudo docker build --build-arg KERNEL=kernel -t rpi_tpm_kernel_builder_rpi_0 .
 
 # Supported Kernel Version
+
 
 The last tested kernel version can be found using the [git tags of this repository](https://github.com/jhachenbergerSIT/letstrusttpmkernel/releases).
