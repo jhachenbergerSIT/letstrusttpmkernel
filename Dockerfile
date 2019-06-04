@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 
 ENV HOME /root
 
-RUN apt update && apt install -y \
+RUN echo "nameserver 8.8.8.8" > /etc/resolv.conf && apt update && apt install -y \
 	build-essential \
 	kmod \
 	nano \
@@ -16,7 +16,8 @@ RUN apt update && apt install -y \
 	# - required by kernel v4.15
 	libssl-dev \
 	# - required by kernel v4.16
-	bison flex
+	bison flex \
+	gcc-aarch64-linux-gnu
 
 
 
@@ -36,13 +37,13 @@ WORKDIR $HOME/linux
 ##     - kernel: For Pi 1, Pi Zero, Pi Zero W, or Compute Module
 ARG KERNEL=kernel7
 ENV KERNEL=${KERNEL}
-RUN make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bcm2709_defconfig
-RUN wget https://letstrust.de/uploads/letstrust-tpm-overlay.dts -O arch/arm/boot/dts/overlays/letstrust-tpm-overlay.dts
+RUN make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bcmrpi3_defconfig
+RUN wget https://letstrust.de/uploads/letstrust-tpm-overlay.dts -O arch/arm64/boot/dts/overlays/letstrust-tpm-overlay.dts
 COPY kernel/.config.patch .
 RUN cat .config.patch >> .config
 
 # - Build the kernel
-RUN make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- zImage modules dtbs overlays/letstrust-tpm.dtbo -j8
+RUN make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image modules dtbs -j8
 
 # - Prepare the deploy-to-sd-card script
 COPY install_kernel.sh .
@@ -50,4 +51,4 @@ RUN chmod u+x install_kernel.sh
 COPY kernel/config.txt.patch /tmp
 
 # - Install kernel to sd card
-ENTRYPOINT ["./install_kernel.sh", ${KERNEL}]
+#ENTRYPOINT ["./install_kernel.sh", ${KERNEL}]
